@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:bytwise_app/Profile.dart';
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter/material.dart';
 
 class MyState extends StatefulWidget {
   const MyState({super.key});
@@ -26,4 +25,3 @@ class _MyState extends State<MyState> with TickerProviderStateMixin {
     return Scaffold(body: Center(child: Profile(controllers: _controller)));
   }
 }
-
