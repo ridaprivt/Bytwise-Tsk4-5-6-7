@@ -4,6 +4,8 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'Profile.dart';
+import 'dart:math' as math;
+import 'Animation.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +21,29 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(seconds: 2),
+    vsync: this,
+  )..repeat(reverse: true);
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _controller,
+    curve: Curves.fastOutSlowIn,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,9 +55,15 @@ class MyHomePage extends StatelessWidget {
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
-                Image.asset(
-                  'assets/2.png',
-                  height: 60.h,
+                ScaleTransition(
+                  scale: _animation,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      'assets/2.png',
+                      height: 60.h,
+                    ),
+                  ),
                 ),
                 Positioned(
                   bottom: 0.h,
@@ -175,7 +205,7 @@ class MyHomePage extends StatelessWidget {
                           SizedBox(height: 3.h),
                           GestureDetector(
                             onTap: () {
-                              Get.to(Profile());
+                              Get.to(MyState());
                             },
                             child: Container(
                               width: double.infinity,

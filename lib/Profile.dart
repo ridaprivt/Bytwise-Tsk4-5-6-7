@@ -5,8 +5,15 @@ import 'editProfile.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slide_to_act/slide_to_act.dart';
+import 'Animation.dart';
+import 'dart:math' as math;
 
-class Profile extends StatelessWidget {
+class Profile extends AnimatedWidget {
+  const Profile({
+    super.key,
+    required AnimationController controllers,
+  }) : super(listenable: controllers);
+  Animation<double> get _progress => listenable as Animation<double>;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -79,37 +86,18 @@ class Profile extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 3.h),
-                    Container(
-                      child: Stack(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(7.sp),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50.sp),
-                                border: Border.all(
-                                    color: Color(0xFF869ADF), width: 0.6.h)),
-                            child: Image.asset(
-                              'assets/me.png',
-                              height: 15.5.h,
-                            ),
-                          ),
-                          Positioned(
-                            right: 0.w,
-                            bottom: 0.h,
-                            child: Container(
-                                padding: EdgeInsets.all(10.sp),
-                                height: 5.5.h,
-                                width: 11.w,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: Color(0xFF5E70AF),
-                                    borderRadius: BorderRadius.circular(30.sp)),
-                                child: Image.asset(
-                                  'assets/cam.png',
-                                  height: 4.h,
-                                )),
-                          ),
-                        ],
+                    Transform.rotate(
+                      angle: _progress.value * 2.0 * math.pi,
+                      child: Container(
+                        padding: EdgeInsets.all(7.sp),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.sp),
+                            border: Border.all(
+                                color: Color(0xFF869ADF), width: 0.6.h)),
+                        child: Image.asset(
+                          'assets/me.png',
+                          height: 15.5.h,
+                        ),
                       ),
                     ),
                     SizedBox(height: 2.h),
